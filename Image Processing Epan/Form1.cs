@@ -1,3 +1,5 @@
+using Image_Processing.Libraries;
+using System.Drawing.Imaging;
 using WebCamLib;
 
 namespace Image_Processing
@@ -24,7 +26,7 @@ namespace Image_Processing
 
         private void webcamToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(webcam != null)
+            if (webcam != null)
             {
                 webcam.Stop();
                 webcam = null;
@@ -40,7 +42,7 @@ namespace Image_Processing
             loadToolStripMenuItem.Visible = false;
             imageToolStripMenuItem.Visible = false;
 
-            
+
 
             pictureBox1.Visible = true;
             pictureBox2.Visible = false;
@@ -384,6 +386,220 @@ namespace Image_Processing
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void gaussianBlueToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Please load an image first.");
+                return;
+            }
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+            Bitmap processed = new Bitmap(bitmap);
+
+            ConvMatrix m = new ConvMatrix();
+            m.setMatrix(1, 2, 1,
+                        2, 4, 2,
+                        1, 2, 1,
+                        16);
+            BitmapFilter.Conv3x3(processed, m);
+
+            pictureBox2.Image = processed;
+        }
+
+        private void smoothToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Please load an image first.");
+                return;
+            }
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+            Bitmap processed = new Bitmap(bitmap);
+
+            ConvMatrix m = new ConvMatrix();
+            m.SetAll(1);
+            m.Pixel = 1;
+            m.Factor = 1 + 8;
+            BitmapFilter.Conv3x3(processed, m);
+
+            pictureBox2.Image = processed;
+        }
+
+        private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Please load an image first.");
+                return;
+            }
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+            Bitmap processed = new Bitmap(bitmap);
+
+            ConvMatrix m = new ConvMatrix();
+            m.setMatrix(0, -2, 0,
+                        -2, 11, -2,
+                        0, -2, 0,
+                        3);
+            BitmapFilter.Conv3x3(processed, m);
+
+            pictureBox2.Image = processed;
+        }
+
+        private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Please load an image first.");
+                return;
+            }
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+            Bitmap processed = new Bitmap(bitmap);
+
+            ConvMatrix m = new ConvMatrix();
+            m.setMatrix(-1, -1, -1,
+                        -1, 9, -1,
+                        -1, -1, -1,
+                        1);
+            BitmapFilter.Conv3x3(processed, m);
+
+            pictureBox2.Image = processed;
+        }
+
+        private void embossingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image == null)
+            {
+                MessageBox.Show("Please load an image first.");
+                return;
+            }
+            Bitmap bitmap = new Bitmap(pictureBox1.Image);
+            Bitmap processed = new Bitmap(bitmap);
+
+            ConvMatrix m = new ConvMatrix();
+            m.setMatrix(-1, 0, -1,
+                        0, 4, 0,
+                        -1, 0, -1,
+                        1, 127);
+            BitmapFilter.Conv3x3(processed, m);
+
+            pictureBox2.Image = processed;
+        }
+
+        private void imageManupulationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void horzVertToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Please load an image first.");
+                    return;
+                }
+                Bitmap bitmap = new Bitmap(pictureBox1.Image);
+                Bitmap processed = new Bitmap(bitmap);
+
+                ConvMatrix m = new ConvMatrix();
+                m.setMatrix(0, -1, 0,
+                        -1, 4, -1,
+                        0, -1, 0,
+                        1, 127);
+                BitmapFilter.Conv3x3(processed, m);
+
+                pictureBox2.Image = processed;
+            }
+        }
+
+        private void allDirectionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Please load an image first.");
+                    return;
+                }
+                Bitmap bitmap = new Bitmap(pictureBox1.Image);
+                Bitmap processed = new Bitmap(bitmap);
+
+                ConvMatrix m = new ConvMatrix();
+                m.setMatrix(-1, -1, -1,
+                        -1, 8, -1,
+                        -1, -1, -1,
+                        1, 127);
+                BitmapFilter.Conv3x3(processed, m);
+
+                pictureBox2.Image = processed;
+            }
+        }
+
+        private void lossyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Please load an image first.");
+                    return;
+                }
+                Bitmap bitmap = new Bitmap(pictureBox1.Image);
+                Bitmap processed = new Bitmap(bitmap);
+
+                ConvMatrix m = new ConvMatrix();
+                m.setMatrix(1, -2, 1,
+                        -2, 4, -2,
+                        -2, 1, -2,
+                        1, 128);
+                BitmapFilter.Conv3x3(processed, m);
+
+                pictureBox2.Image = processed;
+            }
+        }
+
+        private void horizontalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Please load an image first.");
+                    return;
+                }
+                Bitmap bitmap = new Bitmap(pictureBox1.Image);
+                Bitmap processed = new Bitmap(bitmap);
+
+                ConvMatrix m = new ConvMatrix();
+                m.setMatrix(0, 0, 0,
+                        -1, 2, -1,
+                        0, 0, 0,
+                        1, 127);
+                BitmapFilter.Conv3x3(processed, m);
+
+                pictureBox2.Image = processed;
+            }
+        }
+
+        private void verticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            {
+                if (pictureBox1.Image == null)
+                {
+                    MessageBox.Show("Please load an image first.");
+                    return;
+                }
+                Bitmap bitmap = new Bitmap(pictureBox1.Image);
+                Bitmap processed = new Bitmap(bitmap);
+
+                ConvMatrix m = new ConvMatrix();
+                m.setMatrix(0, -1, 0,
+                        0, 0, 0,
+                        0, 1, 0,
+                        1, 127);
+                BitmapFilter.Conv3x3(processed, m);
+
+                pictureBox2.Image = processed;
+            }
         }
     }
 }
